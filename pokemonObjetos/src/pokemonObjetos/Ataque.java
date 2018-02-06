@@ -126,17 +126,33 @@ public class Ataque {
 //	public String[] getPokemonPuedeUsarlo(){
 //		return  pokemonPuedeUsarlo;
 //	}
-	public Ataque getListaAtaquesPosibles(Pokemon pokemon){
-		Ataque[] ListaAtaquesPosibles;
+	
+	public Ataque[] getListaAtaquesPosibles(Pokemon pokemon){
+		boolean exit=false;
+		Ataque[] listaAtaquesPosibles=new Ataque[0];
 		for(int i=0;i<listaAtaques.length;i++ ){
-			if (pokemon.getTipo()== getPokemonPuedeUsarlo()){
-				
+//			este segundo for es para comparar cada pokemon que puede realizar cada uno de los ataques
+			for(int j=0;j<getAtaqueDeLaListaCompleta(i).getPokemonPuedeUsarlo().length && exit==false;j++ ){
+				if (pokemon.getNombre().equals(getAtaqueDeLaListaCompleta(i).getNombrePokemonValido(j))){
+					listaAtaquesPosibles=new Ataque[i];
+					listaAtaquesPosibles[listaAtaquesPosibles.length-1]=getAtaqueDeLaListaCompleta(i);
+					exit=true;
+				}
 			}
 		}
-		return ListaAtaquesPosibles; 
+		return listaAtaquesPosibles; 
 	}
-	public String[] getPokemonPuedeUsarlo() {
+		public String[] getPokemonPuedeUsarlo() {
 		return pokemonPuedeUsarlo;
+	}
+	
+//		devuelve el ataque numero i de la lista al completo
+	public Ataque getAtaqueDeLaListaCompleta(int i) {
+		return listaAtaques[i];
+	}
+//	le das un ataque y te dice uno de los pokemon que lo pueda usar
+	public String getNombrePokemonValido(int i) {
+		return pokemonPuedeUsarlo[i];
 	}
 
 
@@ -177,12 +193,12 @@ public class Ataque {
 		return tipo;
 	}
 	
-	public void da�o(Pokemon pokemonATQ, Pokemon pokemonDEF ){
+	public void daño(Pokemon pokemonATQ, Pokemon pokemonDEF, Ataque ataque ){
 	
-	//		calculamos si el ataque tiene el 100% de da�o o no
+	//		calculamos si el ataque tiene el 100% de daño o no
 			setVariacion();
 	//		calculamos si es eficaz o no el ataque contra el pokemon
-			getEfectividad(tipo, pokemonDEF.getTipo());
+			getEfectividad(ataque.getTipo(), pokemonDEF.getTipo());
 	//		comprobamos si recibe stab el ataque
 			if(tipo.equals(pokemonATQ.getTipo())){
 				stab=1.5f;
@@ -195,7 +211,7 @@ public class Ataque {
 			}else{
 				statAtaque=pokemonATQ.getAtaqueESP();
 			}
-	//		calculamos el da�o que le vamos a hacer al pokemon defensor y se lo restamos. Fuente de la f�rmula matem�tica ----- http://es.pokemon.wikia.com/wiki/Da%C3%B1o
+	//		calculamos el daño que le vamos a hacer al pokemon defensor y se lo restamos. Fuente de la fñrmula matemñtica ----- http://es.pokemon.wikia.com/wiki/Da%C3%B1o
 			vidaARestar=(int)-(0.01*stab*efectividad*variacion*(((0.2*(100+1)*statAtaque*potencia)/(25*pokemonDEF.getDefensa()))+2));
 			pokemonDEF.setVida(vidaARestar);
 

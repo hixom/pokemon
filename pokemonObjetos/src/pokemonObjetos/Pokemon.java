@@ -91,7 +91,8 @@ public class Pokemon {
 		return defensaESP;
 	}
 	public void elegirAtaque(Pokemon pokemon){
-		
+		Ataque[] lista=new Ataque[0];
+		lista=getListaAtaquesPosibles(pokemon);
 		for(int i=0;i<4;i++){
 			System;
 	}
@@ -101,23 +102,24 @@ public class Pokemon {
 	}
 		
 		
+	
 		public void puntosDeEsfuerzo(){
 			String[] respuesta=new String[2];
 			Scanner sc = new Scanner (System.in);
-			System.out.println("�en qué dos apartados quieres que se especialice el pokémon (vidaInicial, ataque, defensa, ataqueESP, defensaESP o velocidad)?");
+			System.out.println("�en qué dos apartados quieres que se especialice el pokémon (vida, ataque, defensa, ataqueESP, defensaESP o velocidad)?");
 			do{
 				System.out.println("Elige el primero (recuerda que tiene que ser uno de los siguientes: vidaInicial, ataque, defensa, ataqueESP, defensaESP o velocidad)");
 				respuesta[0]=sc.nextLine();
-			}while(!respuesta[0].equals("vidaInicial") && !respuesta[0].equals("ataque") && !respuesta[0].equals("defensa") && !respuesta[0].equals("ataqueESP") && !respuesta[0].equals("defensaESP") && !respuesta[0].equals("velocidad"));
+			}while(!respuesta[0].equals("vida") && !respuesta[0].equals("ataque") && !respuesta[0].equals("defensa") && !respuesta[0].equals("ataqueESP") && !respuesta[0].equals("defensaESP") && !respuesta[0].equals("velocidad"));
 			
 			do{
 				System.out.println("Elige el segundo (recuerda que tiene que ser uno de los siguientes: vidaInicial, ataque, defensa, ataqueESP, defensaESP o velocidad)");
 				respuesta[1]=sc.nextLine();
-			}while((!respuesta[1].equals("vidaInicial") && !respuesta[1].equals("ataque") && !respuesta[1].equals("defensa") && !respuesta[1].equals("ataqueESP") && !respuesta[1].equals("defensaESP") && !respuesta[1].equals("velocidad")) || respuesta[0].equals(respuesta[1]));
+			}while((!respuesta[1].equals("vida") && !respuesta[1].equals("ataque") && !respuesta[1].equals("defensa") && !respuesta[1].equals("ataqueESP") && !respuesta[1].equals("defensaESP") && !respuesta[1].equals("velocidad")) || respuesta[0].equals(respuesta[1]));
 			
 			for(int i=0;i<respuesta.length;i++){
 				switch(respuesta[i]){
-					case "vidaInicial":
+					case "vida":
 						vidaInicial+=70;
 						break;
 					case "ataque":
