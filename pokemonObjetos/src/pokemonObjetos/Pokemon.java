@@ -6,20 +6,63 @@ public class Pokemon {
 	private String[] tipo;
 	private int vida, ataque, ataqueESP, defensa, defensaESP, velocidad, vidaInicial;
 	private Ataque[] movimientos= new Ataque[4];
-	private String estado="normal";
+	private String estado;
+	Scanner sc=new Scanner(System.in);
 	
 	
 	public Pokemon(){
-		
-		nombre="Missigno";
-		setMote(nombre);
-		estadisticas(nombre);
-		elegirAtaque();
+		setNombre();
+		setMote();
+		estado="normal";
+		setEstadisticas(nombre);
 		puntosDeEsfuerzo();
 		vida=vidaInicial;
+		if (!nombre.equals("blastoise")||!nombre.equals("charizard") || !nombre.equals("venusaur")) {
+		String []listaPokemon=new String[1];
+		listaPokemon[0]="missigno";
+		String []efectosOtro=new String[2];
+		efectosOtro[0]="ataque";
+		efectosOtro[1]="ataqueESP";
+		nombre="Missigno";
+		setMote(nombre);
+		setMovimientos(nombre);
+		movimientos[0]= new Ataque("Paliza universal","Error Supremo", "fisica",99999 , 100, 50,listaPokemon,efectosOtro);
+		movimientos[1]= new Ataque("Destrucción total","Error Supremo", "especial",99999 , 100, 50,listaPokemon,efectosOtro);
+		movimientos[2]= new Ataque("erradicación molecular","Error Supremo", "fisica",99999 , 100, 50,listaPokemon,efectosOtro);
+		efectosOtro=new String[3];
+		efectosOtro[0]="ataque";
+		efectosOtro[1]="ataqueESP";
+		efectosOtro[2]="curar";
+		movimientos[3]= new Ataque("nirvana","Error Supremo", "otro",0 , 100, 50,listaPokemon,efectosOtro);
+		}else {
+			setMovimientos(nombre);
+		}
 	
 	}
-	public void estadisticas(String nombre){
+	public void setMote() {
+		String respuesta;
+		
+		do {
+			System.out.println("¿Quieres ponerle algún mote?(si|no)");
+			respuesta = sc.nextLine();
+		}while(!respuesta.equals("si")|| !respuesta.equals("no"));
+		if(respuesta.equals("si")) {
+			System.out.println("Ok, escríbelo entonces");
+			this.mote=sc.nextLine();
+		}else {
+			this.mote=this.nombre;
+		}
+		
+	
+}
+	public void setNombre() {
+		
+			System.out.println("elige: blastoise, charizard o venusaur");
+			this.nombre = sc.nextLine();
+		
+	}
+
+	public void setEstadisticas(String nombre){
 		switch (nombre){
 		 case "Missigno":
 			tipo[0]="Error Supremo";
@@ -60,11 +103,6 @@ public class Pokemon {
 			
 		}
 	}
-
-	private void crearAtaques(){
-		
-	}
-	
 		
 	public int getVelocidad() {
 		return velocidad;
@@ -90,15 +128,14 @@ public class Pokemon {
 	public int getDefensaESP() {
 		return defensaESP;
 	}
-	public void elegirAtaque(Pokemon pokemon){
-		Ataque[] lista=new Ataque[0];
-		lista=getListaAtaquesPosibles(pokemon);
-		for(int i=0;i<4;i++){
-			System;
-	}
-		for(int i=0;i<4;i++){
-				movimientos[i]= new Ataque();
+	public void setMovimientos(String nombre){
+		System.out.println("Vamos a proceder a elegir los cuatro ataques");
+		for (int i=0;i<4;i++) {
+			this.movimientos[i]=new Ataque();
+			this.movimientos[i].elegirAtaque(nombre, this.movimientos, i);
 		}
+	
+
 	}
 		
 		
@@ -106,7 +143,7 @@ public class Pokemon {
 		public void puntosDeEsfuerzo(){
 			String[] respuesta=new String[2];
 			Scanner sc = new Scanner (System.in);
-			System.out.println("�en qué dos apartados quieres que se especialice el pokémon (vida, ataque, defensa, ataqueESP, defensaESP o velocidad)?");
+			System.out.println("¿En qué dos apartados quieres que se especialice el pokémon (vida, ataque, defensa, ataqueESP, defensaESP o velocidad)?");
 			do{
 				System.out.println("Elige el primero (recuerda que tiene que ser uno de los siguientes: vidaInicial, ataque, defensa, ataqueESP, defensaESP o velocidad)");
 				respuesta[0]=sc.nextLine();
@@ -178,8 +215,3 @@ public class Pokemon {
 			this.estado = estado;
 		}
 	}
-	
-//	tengo que meter una funcion de showEstadisticas
-	
-		
-		
