@@ -16,8 +16,20 @@ public class Ataque {
 	private int statAtaque;
 	private float stab;
 	
-	public Ataque(String nombre,String tipo, String categoria, int potencia, int precision, int pp, String[] pokemonPuedeUsarlo, String[] efectosOtro){
+	public Ataque() {
+		this.nombre="";
+		this.tipo=""; 
+		this.categoria="";
+		this.potencia=0;
+		this.precision=0; 
+		this.pp=0;	
+		this.pokemonPuedeUsarlo[0]="";
+		this.efectosOtro[0]=efectosOtro[0];
+			
 		
+	}
+	public Ataque(String nombre,String tipo, String categoria, int potencia, int precision, int pp, String[] pokemonPuedeUsarlo, String[] efectosOtro){
+	
 		this.nombre=nombre;
 		this.tipo=tipo; 
 		this.categoria=categoria;
@@ -29,9 +41,9 @@ public class Ataque {
 			this.pokemonPuedeUsarlo[i]=pokemonPuedeUsarlo[i];
 			
 		}
-		for(int i=0;i<pokemonPuedeUsarlo.length;i++){
+		for(int i=0;i<efectosOtro.length;i++){
 			
-			this.pokemonPuedeUsarlo[i]=pokemonPuedeUsarlo[i];
+			this.efectosOtro[i]=efectosOtro[i];
 			
 		}
 		
@@ -123,26 +135,81 @@ public class Ataque {
 		
 	
 	}
-//	public String[] getPokemonPuedeUsarlo(){
-//		return  pokemonPuedeUsarlo;
-//	}
-	
-	public Ataque[] getListaAtaquesPosibles(Pokemon pokemon){
+	public void elegirAtaque(String nombre, Ataque[] movimientosPokemon, int i){
+		boolean exit=false;
+		String nombreAtaqueDeseado;
+ 		Ataque[] listaPosibles;
+ 		Ataque ataqueDeseado=new Ataque();
+ 		System.out.println("Estos son los que puedes elegir en base al pokemon que has elegido");
+ 		listaPosibles=getListaAtaquesPosibles(nombre, movimientosPokemon );
+		showListaPosibles(listaPosibles);
+		System.out.println("elige el ataque nª"+i+":");
+		nombreAtaqueDeseado=sc.nextLine();
+		
+		for(int j=0; j<listaAtaques.length && !exit ;j++){
+			if(nombreAtaqueDeseado.equals(listaAtaques[j].getNombre())){
+				ataqueDeseado.copia(j);
+				exit=true;
+			}
+		}
+ 		
+ 		
+	}
+	private void showListaPosibles(Ataque[] lista) {
+		
+		for(int i=0; i<lista.length;i++){
+			String[] listaEfectosOtro=lista[i].getEfectosOtro();
+			System.out.println("nombre: "+listaAtaques[i].getNombre());
+			System.out.println("El cual tiene las siguientes características:");
+			System.out.println("	- tipo: "+listaAtaques[i].getTipo());
+			System.out.println("	- categoría: "+listaAtaques[i].getCategoria());
+			System.out.println("	- potencia: "+listaAtaques[i].getPotencia());
+			System.out.println("	- precision: "+listaAtaques[i].getPrecision());
+			System.out.println("	- pp: "+listaAtaques[i].getPp());
+			System.out.println("	-efectos secundarios que tiene:");
+			for(int j=0; j<lista[i].getEfectosOtro().length;j++){
+				System.out.println("		-"+listaEfectosOtro[j]);
+			}
+			
+		}
+	}
+	private void copia(int i) {
+		this.nombre=listaAtaques[i].getNombre();
+		this.tipo=listaAtaques[i].getTipo();
+		this.categoria=listaAtaques[i].getCategoria();
+		this.potencia=listaAtaques[i].getPotencia();
+		this.precision=listaAtaques[i].getPrecision();
+		this.pp=listaAtaques[i].getPp();
+		this.pokemonPuedeUsarlo=listaAtaques[i].getPokemonPuedeUsarlo(); 
+		this.efectosOtro=listaAtaques[i].getEfectosOtro();
+	}
+	public String[] getEfectosOtro() {
+		return efectosOtro;
+	}
+	public Ataque[] getListaAtaquesPosibles(String nombre, Ataque[] ataquesUsados){
 		boolean exit=false;
 		Ataque[] listaAtaquesPosibles=new Ataque[0];
 		for(int i=0;i<listaAtaques.length;i++ ){
 //			este segundo for es para comparar cada pokemon que puede realizar cada uno de los ataques
 			for(int j=0;j<getAtaqueDeLaListaCompleta(i).getPokemonPuedeUsarlo().length && exit==false;j++ ){
-				if (pokemon.getNombre().equals(getAtaqueDeLaListaCompleta(i).getNombrePokemonValido(j))){
-					listaAtaquesPosibles=new Ataque[i];
-					listaAtaquesPosibles[listaAtaquesPosibles.length-1]=getAtaqueDeLaListaCompleta(i);
-					exit=true;
+				if (nombre.equals(getAtaqueDeLaListaCompleta(i).getNombrePokemonValido(j))){
+					for(int k=0;k<ataquesUsados.length && exit==false;k++) {
+						if(!ataquesUsados[k].getNombre().equals(getAtaqueDeLaListaCompleta(i))) {
+							listaAtaquesPosibles=new Ataque[i];
+							listaAtaquesPosibles[listaAtaquesPosibles.length-1]=getAtaqueDeLaListaCompleta(i);
+							exit=true;
+						}
+						
+					}
+					
 				}
 			}
 		}
 		return listaAtaquesPosibles; 
 	}
-		public String[] getPokemonPuedeUsarlo() {
+	
+	
+	public String[] getPokemonPuedeUsarlo() {
 		return pokemonPuedeUsarlo;
 	}
 	
@@ -193,122 +260,5 @@ public class Ataque {
 		return tipo;
 	}
 	
-	public void daño(Pokemon pokemonATQ, Pokemon pokemonDEF, Ataque ataque ){
 	
-	//		calculamos si el ataque tiene el 100% de daño o no
-			setVariacion();
-	//		calculamos si es eficaz o no el ataque contra el pokemon
-			getEfectividad(ataque.getTipo(), pokemonDEF.getTipo());
-	//		comprobamos si recibe stab el ataque
-			if(tipo.equals(pokemonATQ.getTipo())){
-				stab=1.5f;
-			}else{
-				stab=1;
-			}
-	//		comprobamos si el ataque el por el lado fisico o especial y devolvemos el stat del atacante			
-			if (categoria.equals("fisico")){
-				statAtaque=pokemonATQ.getAtaque();
-			}else{
-				statAtaque=pokemonATQ.getAtaqueESP();
-			}
-	//		calculamos el daño que le vamos a hacer al pokemon defensor y se lo restamos. Fuente de la fñrmula matemñtica ----- http://es.pokemon.wikia.com/wiki/Da%C3%B1o
-			vidaARestar=(int)-(0.01*stab*efectividad*variacion*(((0.2*(100+1)*statAtaque*potencia)/(25*pokemonDEF.getDefensa()))+2));
-			pokemonDEF.setVida(vidaARestar);
-
-	
-	}
-private void setVariacion(){
-	variacion=(int)(Math.random()*(100-85+1)+(85));
-}
-
-private void getEfectividad(String tipoMovimiento, String[] tipoDefensor ){
-	float efectividad=1;
-	for(int i=0;i<tipoDefensor.length;i++){
-		switch(tipoMovimiento){
-		case "agua":
-			switch(tipoDefensor[i]){
-				case "fuego":
-					efectividad+=1;
-					break;
-				case "agua":
-					efectividad-=0.5f;
-					break;
-				case "planta":
-					efectividad-=0.5f;
-					break;
-			}
-			break;
-		case "planta":
-			switch(tipoDefensor[i]){
-				case "fuego":
-					efectividad-=0.5f;
-					break;
-				case "agua":
-					efectividad+=1;
-					break;
-				case "planta":
-					efectividad-=0.5f;
-					break;
-				case "volador":
-					efectividad-=0.5f;
-					break;
-			}
-			break;
-		case "fuego":
-			switch(tipoDefensor[i]){
-				case "fuego":
-					efectividad-=0.5f;
-					break;
-				case "agua":
-					efectividad-=0.5f;
-					break;
-				case "planta":
-					efectividad+=1;
-					break;
-			}
-			break;
-		case "hielo":
-			switch(tipoDefensor[i]){
-				case "fuego":
-					efectividad-=0.5f;
-					break;
-				case "agua":
-					efectividad-=0.5f;
-					break;
-				case "planta":
-					efectividad+=1;
-					break;
-				case "volador":
-					efectividad+=1;
-					break;
-			}
-			break;
-		case "tierra":
-			switch(tipoDefensor[i]){
-				case "fuego":
-					efectividad+=1;
-					break;
-				case "agua":
-//					se mantiene el mismo valor
-					break;
-				case "planta":
-					efectividad-=0.5f;
-					break;
-			}
-			break;
-		case "roca":
-			switch(tipoDefensor[i]){
-				case "fuego":
-					efectividad+=1;
-					break;
-				case "volador":
-					efectividad+=1;
-					break;
-			}
-			break;
-}
-	
-	}
-	
-	}
 }

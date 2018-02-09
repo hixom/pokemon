@@ -7,7 +7,7 @@ public class Otro {
 //	quemar
 //	congelar
 //	dormir
-	public Otro(String[] acciones, int veces, Pokemon pokemonAfectado){
+	public Otro(String[] acciones,  Pokemon pokemonAfectado){
 		for(int i =0; i< acciones.length;i++){
 			switch(acciones[i]){
 				case "ataque":

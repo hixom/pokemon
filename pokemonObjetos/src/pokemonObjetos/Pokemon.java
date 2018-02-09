@@ -55,6 +55,25 @@ public class Pokemon {
 		
 	
 }
+	public Ataque elegirAtaque() {
+		
+		int nAtaqueDeseado;
+		System.out.println("estos son los movimientos que has elegido");
+		for (int i=0;i<4;i++) {
+			System.out.println(this.movimientos[i].getNombre()+" (nª"+i+")");
+		}
+		do {
+		System.out.println("elige ahora cuál es el ataque que quieres (0,1,2,3)");
+		nAtaqueDeseado=sc.nextInt();
+		}while(nAtaqueDeseado<0 || nAtaqueDeseado>3);
+		
+		return this.movimientos[nAtaqueDeseado];
+	}
+	
+	
+	public Ataque[] getMovimientos() {
+		return movimientos;
+	}
 	public void setNombre() {
 		
 			System.out.println("elige: blastoise, charizard o venusaur");
@@ -214,4 +233,5 @@ public class Pokemon {
 		public void setEstado(String estado) {
 			this.estado = estado;
 		}
-	}
+	}	
+		
