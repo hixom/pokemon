@@ -233,6 +233,7 @@ public class Pokemon {
 				vida=0;
 			}
 			
+			
 		}
 		public String getEstado() {
 			return estado;
