@@ -26,14 +26,14 @@ public class Pokemon {
 		nombre="Missigno";
 		setMote(nombre);
 		setMovimientos(nombre);
-		movimientos[0]= new Ataque("Paliza universal","Error Supremo", "fisica",99999 , 100, 50,listaPokemon,efectosOtro);
-		movimientos[1]= new Ataque("Destrucción total","Error Supremo", "especial",99999 , 100, 50,listaPokemon,efectosOtro);
-		movimientos[2]= new Ataque("erradicación molecular","Error Supremo", "fisica",99999 , 100, 50,listaPokemon,efectosOtro);
+		movimientos[0]= new Ataque("Paliza universal","Error Supremo", "fisica",99999 , 100, 50,listaPokemon,efectosOtro, "defensor");
+		movimientos[1]= new Ataque("Destrucción total","Error Supremo", "especial",99999 , 100, 50,listaPokemon,efectosOtro, "defensor");
+		movimientos[2]= new Ataque("erradicación molecular","Error Supremo", "fisica",99999 , 100, 50,listaPokemon,efectosOtro, "defensor");
 		efectosOtro=new String[3];
 		efectosOtro[0]="ataque";
 		efectosOtro[1]="ataqueESP";
 		efectosOtro[2]="curar";
-		movimientos[3]= new Ataque("nirvana","Error Supremo", "otro",0 , 100, 50,listaPokemon,efectosOtro);
+		movimientos[3]= new Ataque("nirvana","Error Supremo", "otro",0 , 100, 50,listaPokemon,efectosOtro, "defensor");
 		}else {
 			setMovimientos(nombre);
 		}
@@ -225,7 +225,14 @@ public class Pokemon {
 			this.mote=mote;
 		}
 		public void setVida(int modificacionVida){
-			this.vida+=modificacionVida;
+			vida+=modificacionVida;
+			if(vida>vidaInicial){
+				vida=vidaInicial;
+			}
+			if(vida<0){
+				vida=0;
+			}
+			
 		}
 		public String getEstado() {
 			return estado;

@@ -15,20 +15,21 @@ public class Ataque {
 	private float efectividad;
 	private int statAtaque;
 	private float stab;
+	private String AQuienAfecta;
 	
 	public Ataque() {
-		this.nombre="";
-		this.tipo=""; 
-		this.categoria="";
-		this.potencia=0;
-		this.precision=0; 
-		this.pp=0;	
-		this.pokemonPuedeUsarlo[0]="";
-		this.efectosOtro[0]=efectosOtro[0];
+		nombre="";
+		tipo=""; 
+		categoria="";
+		potencia=0;
+		precision=0; 
+		pp=0;	
+		pokemonPuedeUsarlo[0]="";
+		efectosOtro[0]=efectosOtro[0];
 			
 		
 	}
-	public Ataque(String nombre,String tipo, String categoria, int potencia, int precision, int pp, String[] pokemonPuedeUsarlo, String[] efectosOtro){
+	public Ataque(String nombre,String tipo, String categoria, int potencia, int precision, int pp, String[] pokemonPuedeUsarlo, String[] efectosOtro,String AQuienAfecta){
 	
 		this.nombre=nombre;
 		this.tipo=tipo; 
@@ -48,89 +49,95 @@ public class Ataque {
 		}
 		
 	}
+	public String getAQuienAfecta() {
+		return AQuienAfecta;
+	}
+	public void setAQuienAfecta(String aQuienAfecta) {
+		AQuienAfecta = aQuienAfecta;
+	}
 	public void listaAtaques(){
 		
 		this.pokemonPuedeUsarlo=new String[1];
 		listaAtaques= new Ataque[14];
 		pokemonPuedeUsarlo[0]="charizard";
 		efectosOtro[0]="quemar";
-		listaAtaques[0]=new Ataque("lanzallamas", "fuego", 		"especial", 		90, 		 100, 			10, 	 pokemonPuedeUsarlo, efectosOtro  );
+		listaAtaques[0]=new Ataque("lanzallamas", "fuego", 		"especial", 		90, 		 100, 			10, 	 pokemonPuedeUsarlo, efectosOtro, "defensor"  );
 		
 		this.pokemonPuedeUsarlo=new String[3];
 		pokemonPuedeUsarlo[0]="charizard";
 		pokemonPuedeUsarlo[1]="venusaur";
 		pokemonPuedeUsarlo[2]="blastoise";
 		efectosOtro[0]="nada";
-		listaAtaques[2]=new Ataque("terremoto", "tierra", 		"fisico", 		100, 		 100, 			10, 	 pokemonPuedeUsarlo, efectosOtro  );
+		listaAtaques[2]=new Ataque("terremoto", "tierra", 		"fisico", 		100, 		 100, 			10, 	 pokemonPuedeUsarlo, efectosOtro , "nadie" );
 		
 		this.pokemonPuedeUsarlo=new String[1];
 		pokemonPuedeUsarlo[0]="blastoise";
 		efectosOtro[0]="quemar";
-		listaAtaques[1]= new Ataque("escaldar", "agua", 		"especial", 		80, 		 100, 			15, 	 pokemonPuedeUsarlo, efectosOtro  );
+		listaAtaques[1]= new Ataque("escaldar", "agua", 		"especial", 		80, 		 100, 			15, 	 pokemonPuedeUsarlo, efectosOtro , "defensor" );
 		
 		this.pokemonPuedeUsarlo=new String[1];
 		pokemonPuedeUsarlo[0]="charizard";
 		efectosOtro[0]="ataque";
 		efectosOtro[1]="velocidad";
-		listaAtaques[3]=new Ataque("danza dragon", "dragon", 		"otro", 		0, 		 100, 			15, 	 pokemonPuedeUsarlo, efectosOtro  );
+		listaAtaques[3]=new Ataque("danza dragon", "dragon", 		"otro", 		0, 		 100, 			15, 	 pokemonPuedeUsarlo, efectosOtro , "atacante" );
 		
 		this.pokemonPuedeUsarlo=new String[2];
 		pokemonPuedeUsarlo[0]="venusaur";
 		pokemonPuedeUsarlo[1]="blastoise";
 		efectosOtro[0]="curar";
-		listaAtaques[4]= new Ataque("recuperacion", "normal", 		"otro", 		0, 		 100, 			10, 	 pokemonPuedeUsarlo, efectosOtro  );
+		listaAtaques[4]= new Ataque("recuperacion", "normal", 		"otro", 		0, 		 100, 			10, 	 pokemonPuedeUsarlo, efectosOtro , "atacante" );
 		
 		this.pokemonPuedeUsarlo=new String[3];
 		pokemonPuedeUsarlo[0]="charizard";
 		pokemonPuedeUsarlo[1]="venusaur";
 		pokemonPuedeUsarlo[2]="blastoise";
 		efectosOtro[0]="proteger";
-		listaAtaques[5]= new Ataque("proteccion", "normal", 		"otro", 		0, 		 100, 			20, 	 pokemonPuedeUsarlo, efectosOtro  );
+		listaAtaques[5]= new Ataque("proteccion", "normal", 		"otro", 		0, 		 100, 			20, 	 pokemonPuedeUsarlo, efectosOtro , "atacante" );
 		
 		this.pokemonPuedeUsarlo=new String[2];
 		pokemonPuedeUsarlo[0]="venusaur";
 		pokemonPuedeUsarlo[1]="charizard";
 		efectosOtro[0]="ataque";
 		efectosOtro[1]="ataque";
-		listaAtaques[6]= new Ataque("danza espada", "normal", 		"otro", 		0, 		 100, 			10, 	 pokemonPuedeUsarlo, efectosOtro  );
+		listaAtaques[6]= new Ataque("danza espada", "normal", 		"otro", 		0, 		 100, 			10, 	 pokemonPuedeUsarlo, efectosOtro, "atacante"  );
 		
 		this.pokemonPuedeUsarlo=new String[3];
 		pokemonPuedeUsarlo[0]="charizard";
 		pokemonPuedeUsarlo[1]="venusaur";
 		pokemonPuedeUsarlo[2]="blastoise";
-		efectosOtro[0]="envenenar grave";
-		listaAtaques[7]= new Ataque("toxico", "veneno", 		"otro", 		0, 		 90, 			20, 	 pokemonPuedeUsarlo, efectosOtro  );
+		efectosOtro[0]="intoxicar";
+		listaAtaques[7]= new Ataque("toxico", "veneno", 		"otro", 		0, 		 100, 			20, 	 pokemonPuedeUsarlo, efectosOtro , "defensor" );
 		
 		this.pokemonPuedeUsarlo=new String[1];
 		pokemonPuedeUsarlo[0]="blastoise";
 		efectosOtro[0]="congelar";
-		listaAtaques[8]= new Ataque("ventisca", "hielo", 		"especial", 		110, 		 70, 			5, 	 pokemonPuedeUsarlo, efectosOtro  );
+		listaAtaques[8]= new Ataque("ventisca", "hielo", 		"especial", 		110, 		 70, 			5, 	 pokemonPuedeUsarlo, efectosOtro , "defensor" );
 		
 		this.pokemonPuedeUsarlo=new String[1];
 		pokemonPuedeUsarlo[0]="blastoise";
 		efectosOtro[0]="nada";
-		listaAtaques[9]= new Ataque("hidrobomba", "agua", 		"especial", 		110, 		 80, 			5, 	 pokemonPuedeUsarlo, efectosOtro  );
+		listaAtaques[9]= new Ataque("hidrobomba", "agua", 		"especial", 		110, 		 80, 			5, 	 pokemonPuedeUsarlo, efectosOtro, "nadie"  );
 		
 		this.pokemonPuedeUsarlo=new String[1];
 		pokemonPuedeUsarlo[0]="blastoise";
 		efectosOtro[0]="defensa";
 		efectosOtro[1]="defensa";
-		listaAtaques[10]= new Ataque("defensa ferrea", "acero", 		"otro", 		0, 		 100, 			15, 	 pokemonPuedeUsarlo, efectosOtro  );
+		listaAtaques[10]= new Ataque("defensa ferrea", "acero", 		"otro", 		0, 		 100, 			15, 	 pokemonPuedeUsarlo, efectosOtro , "atacante" );
 		
 		this.pokemonPuedeUsarlo=new String[1];
 		pokemonPuedeUsarlo[0]="blastoise";
 		efectosOtro[0]="nada";
-		listaAtaques[11]= new Ataque("fisura", "tierra", 		"fisica", 		999999999, 		 30, 			5, 	 pokemonPuedeUsarlo, efectosOtro  );
+		listaAtaques[11]= new Ataque("fisura", "tierra", 		"fisica", 		999999999, 		 30, 			5, 	 pokemonPuedeUsarlo, efectosOtro , "nadie" );
 		
 		this.pokemonPuedeUsarlo=new String[1];
 		pokemonPuedeUsarlo[0]="venusaur";
 		efectosOtro[0]="nada";
-		listaAtaques[12]= new Ataque("bomba germen", "planta", 		"fisico", 		80, 		 100, 			15, 	 pokemonPuedeUsarlo, efectosOtro  );
+		listaAtaques[12]= new Ataque("bomba germen", "planta", 		"fisico", 		80, 		 100, 			15, 	 pokemonPuedeUsarlo, efectosOtro, "nadie"  );
 		
 		this.pokemonPuedeUsarlo=new String[1];
 		pokemonPuedeUsarlo[0]="venusaur";
 		efectosOtro[0]="nada";
-		listaAtaques[13]= new Ataque("poder oculto", "roca", 		"especial", 		60, 		 100, 			20, 	 pokemonPuedeUsarlo, efectosOtro  );
+		listaAtaques[13]= new Ataque("poder oculto", "roca", 		"especial", 		60, 		 100, 			20, 	 pokemonPuedeUsarlo, efectosOtro, "nadie"  );
 		
 		
 	

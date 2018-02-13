@@ -42,10 +42,14 @@ public class juego {
 			System.out.println(playerLento+" elige el movimiento que quieres hacer");
 			ataqueDeseadoP2=atacaSegundo.elegirAtaque();
 			
+			System.out.println(atacaPrimero.getMote()+" usÛ " ataqueDeseadoP1);
+			
 			
 			
 		}while (pkmnDebilitado==false);
 	}
+	
+
 	public static int masRapido(Pokemon pokemonPlayer1, Pokemon pokemonPlayer2 ) {
 			if (pokemonPlayer1.getVelocidad()>pokemonPlayer2.getVelocidad()) {
 				return 1;
@@ -55,16 +59,31 @@ public class juego {
 		
 	}
 	public void atacar(Pokemon pokemonATQ, Pokemon pokemonDEF, Ataque ataque) {
-		if (!ataque.getCategoria().equals("otro")) {
-			da√±o(pokemonATQ, pokemonDEF, ataque);
-			if(ataque.getEfectosOtro().length==1 && !ataque.getEfectosOtro().equals("nada") ){
-				
+//		si la precision es de 80, por ejemplo, y el random da un numero superior a este no ataca
+		if((Math.random()*(100)+1)<= ataque.getPrecision()){
+			if (!ataque.getCategoria().equals("otro")) {
+				daÒo(pokemonATQ, pokemonDEF, ataque);
+//				comprobamos si adem·s tiene alg˙n efecto secundario 
+				if(!ataque.getEfectosOtro().equals("nada") ){
+					if((Math.random()*(100)+1)<=15){
+						if(ataque.getAQuienAfecta().equals("atacante")){
+							otro(ataque.getEfectosOtro(), pokemonATQ);
+						}else{
+							otro(ataque.getEfectosOtro(), pokemonDEF);
+						}
+					}
+							
+				}
+			}else {
+				otro(ataque.getEfectosOtro(), pokemonDEF);
 			}
-		}else {
+				
 			
-		}
+		}else{
+			System.out.println("El ataque ha fallado.");
+		}	
 	}
-	public void da√±o(Pokemon pokemonATQ, Pokemon pokemonDEF, Ataque ataque ){
+	public void daÒo(Pokemon pokemonATQ, Pokemon pokemonDEF, Ataque ataque ){
 		float stab;
 		int statAtaque;
 		int vidaARestar;
@@ -83,7 +102,7 @@ public class juego {
 				}else{
 					statAtaque=pokemonATQ.getAtaqueESP();
 				}
-		//		calculamos el da√±o que le vamos a hacer al pokemon defensor y se lo restamos. Fuente de la f√±rmula matem√±tica ----- http://es.pokemon.wikia.com/wiki/Da%C3%B1o
+		//		calculamos el daÒo que le vamos a hacer al pokemon defensor y se lo restamos. Fuente de la fÒrmula matemÒtica *---- http://es.pokemon.wikia.com/wiki/Da%C3%B1o
 				vidaARestar=(int)-(0.01*stab*getEfectividad(ataque.getTipo(), pokemonDEF.getTipo())*setVariacion()*(((0.2*(100+1)*statAtaque*ataque.getPotencia())/(25*pokemonDEF.getDefensa()))+2));
 				pokemonDEF.setVida(vidaARestar);
 
@@ -101,81 +120,81 @@ public class juego {
 			case "agua":
 				switch(tipoDefensor[i]){
 					case "fuego":
-						efectividad+=1;
+						efectividad*=2;
 						break;
 					case "agua":
-						efectividad-=0.5f;
+						efectividad/=0.5f;
 						break;
 					case "planta":
-						efectividad-=0.5f;
+						efectividad/=0.5f;
 						break;
 				}
 				break;
 			case "planta":
 				switch(tipoDefensor[i]){
 					case "fuego":
-						efectividad-=0.5f;
+						efectividad/=0.5f;
 						break;
 					case "agua":
-						efectividad+=1;
+						efectividad*=2;
 						break;
 					case "planta":
-						efectividad-=0.5f;
+						efectividad/=0.5f;
 						break;
 					case "volador":
-						efectividad-=0.5f;
+						efectividad/=0.5f;
 						break;
 				}
 				break;
 			case "fuego":
 				switch(tipoDefensor[i]){
 					case "fuego":
-						efectividad-=0.5f;
+						efectividad/=0.5f;
 						break;
 					case "agua":
-						efectividad-=0.5f;
+						efectividad/=0.5f;
 						break;
 					case "planta":
-						efectividad+=1;
+						efectividad*=2;
 						break;
 				}
 				break;
 			case "hielo":
 				switch(tipoDefensor[i]){
 					case "fuego":
-						efectividad-=0.5f;
+						efectividad/=0.5f;
 						break;
 					case "agua":
-						efectividad-=0.5f;
+						efectividad/=0.5f;
 						break;
 					case "planta":
-						efectividad+=1;
+						efectividad*=2;
 						break;
 					case "volador":
-						efectividad+=1;
+						efectividad*=2;
 						break;
 				}
 				break;
 			case "tierra":
 				switch(tipoDefensor[i]){
 					case "fuego":
-						efectividad+=1;
+						efectividad*=2;
 						break;
 					case "agua":
 //						se mantiene el mismo valor
 						break;
 					case "planta":
-						efectividad-=0.5f;
+						efectividad/=0.5f;
 						break;
 				}
 				break;
 			case "roca":
 				switch(tipoDefensor[i]){
 					case "fuego":
-						efectividad+=1;
+						efectividad*=2;
 						break;
 					case "volador":
-						efectividad+=1;
+						efectividad*=2;
 						break;
 				}
 				break;
@@ -184,5 +203,44 @@ public class juego {
 		}
 		return efectividad;
 		}
+	public static void otro(String[] acciones,  Pokemon pokemonAfectado){
+		for(int i =0; i< acciones.length;i++){
+			switch(acciones[i]){
+				case "ataque":
+					pokemonAfectado.setAtaque();
+					System.out.println("has subido el ataque de "+ pokemonAfectado.getMote() +" hasta "+pokemonAfectado.getAtaque() );
+					break;
+				case "defensa":
+					pokemonAfectado.setDefensa();
+					System.out.println("has subido la defensa de "+ pokemonAfectado.getMote() +" hasta "+pokemonAfectado.getDefensa() );
+					break;
+				case "velocidad":
+					pokemonAfectado.setVelocidad();
+					System.out.println("has subido la Velocidad de "+ pokemonAfectado.getMote() +" hasta "+pokemonAfectado.getVelocidad() );
+					break;
+				case "intoxicar":
+					pokemonAfectado.setEstado("envenenado");
+					System.out.println("has intoxicado a " + pokemonAfectado.getMote());
+					break;
+				case "quemar":
+					pokemonAfectado.setEstado("quemado");
+					System.out.println("has quemado a " + pokemonAfectado.getMote());
+					break;
+				case "dormir":
+					pokemonAfectado.setEstado("dormir");
+					System.out.println("has dormido a " + pokemonAfectado.getMote());
+					break;
+				case "congelar":
+					pokemonAfectado.setEstado("congelado");
+					System.out.println("has congelado a " + pokemonAfectado.getMote());
+					break;	
+				case "curar":
+					pokemonAfectado.setVida((int)(pokemonAfectado.getVidaInicial()*0.5));
+					System.out.println(pokemonAfectado.getMote()+" tiene ahora "+pokemonAfectado.getVida()+" puntos de vida");
+					break;
+					
+			}
+		}
+	}
 
 }
