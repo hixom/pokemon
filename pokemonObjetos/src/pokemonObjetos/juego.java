@@ -8,9 +8,9 @@ public class juego {
 		listaAtaques(lista);
 		
 		System.out.println("player1, vamos a proceder a elegir y crear tu pokemon");
-		Pokemon pokemonPlayer1=new Pokemon();
+		Pokemon pokemonPlayer1=new Pokemon(lista);
 		System.out.println("player2, vamos a proceder a elegir y crear tu pokemon");
-		Pokemon pokemonPlayer2=new Pokemon();
+		Pokemon pokemonPlayer2=new Pokemon(lista);
 		
 	}
 public static void listaAtaques(Ataque[] listaAtaques){
@@ -216,12 +216,12 @@ public static void listaAtaques(Ataque[] listaAtaques){
 		
 	}
 	public static boolean atacar(Pokemon pokemonATQ, Pokemon pokemonDEF, Ataque ataque, boolean debilitado) {
-		System.out.println(pokemonATQ.getMote()+" usó "+ ataque.getNombre());
+		System.out.println(pokemonATQ.getMote()+" usï¿½ "+ ataque.getNombre());
 //		si la precision es de 80, por ejemplo, y el random da un numero superior a este no ataca
 		
 		if((Math.random()*(100)+1)<= ataque.getPrecision()){
 			if (!ataque.getCategoria().equals("otro")) {
-				daño(pokemonATQ, pokemonDEF, ataque);
+				daÃ±o(pokemonATQ, pokemonDEF, ataque);
 				if(pokemonDEF.getVida()>0){
 //					comprobamos si ademï¿½s tiene algï¿½n efecto secundario 
 					if(!ataque.getEfectosOtro().equals("nada") ){
@@ -249,7 +249,7 @@ public static void listaAtaques(Ataque[] listaAtaques){
 		ataque.pasarTurno();
 		return debilitado;
 	}
-	public static void daño(Pokemon pokemonATQ, Pokemon pokemonDEF, Ataque ataque ){
+	public static void daÃ±o(Pokemon pokemonATQ, Pokemon pokemonDEF, Ataque ataque ){
 		float stab;
 		int statAtaque;
 		int vidaARestar;
