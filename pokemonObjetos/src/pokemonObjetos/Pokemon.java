@@ -36,7 +36,7 @@ public class Pokemon {
 		movimientos[3]= new Ataque("nirvana","Error Supremo", "otro",0 , 100, 50,listaPokemon,efectosOtro, "defensor");
 		}else {
 			listaAtaques=listaTodosAtaques;
-			setMovimientos(nombre);
+			escogerCuatroAtaques();
 		}
 	
 	}
@@ -163,16 +163,6 @@ public class Pokemon {
 	public int getDefensaESP() {
 		return defensaESP;
 	}
-	public void setMovimientos(String nombre){
-		System.out.println("Vamos a proceder a elegir los cuatro ataques");
-
-		for (int i=0;i<4;i++) {
-			movimientos[i]=new Ataque();
-			movimientos[i].escogerCuatroAtaques(nombre, movimientos, i);
-		}
-	
-
-	}
 		
 		
 	
@@ -267,24 +257,29 @@ public class Pokemon {
 		
 		
 //		este sirve para que en medio de la batalla elijas cual de los cuatro ataques quieres hacer
-		public void escogerCuatroAtaques(String nombre, Ataque[] movimientosPokemon, int i){
+		public void escogerCuatroAtaques(){
 			boolean exit=false;
 			String nombreAtaqueDeseado;
 	 		Ataque[] listaPosibles;
 	 		Ataque ataqueDeseado=new Ataque();
-	 		System.out.println("Estos son los que puedes elegir en base al pokemon que has elegido");
-	 		listaPosibles=getListaAtaquesPosibles(nombre, movimientosPokemon, listaAtaques );
-			showListaPosibles(listaPosibles);
-			System.out.println("elige el ataque nÂª"+i+":");
-			nombreAtaqueDeseado=sc.nextLine();
-			
-			for(int j=0; j<listaPosibles.length && !exit ;j++){
-				if(nombreAtaqueDeseado.equals(listaPosibles[j].getNombre())){
-					ataqueDeseado.copia(listaPosibles[j]);
-					
-					exit=true;
+	 		listaPosibles=getListaAtaquesPosibles();
+	 		System.out.println("Vamos a elegir los cuatro ataques que tendrá tu pokémon:");
+	 		for (int i = 0; i < listaPosibles.length; i++) {
+	 			System.out.println("Estos son los que puedes elegir en base al pokemon que has elegido");
+		 		listaPosibles=getListaAtaquesPosibles();
+				showListaPosibles(listaPosibles);
+				System.out.println("elige el ataque nÂª"+i+":");
+				nombreAtaqueDeseado=sc.nextLine();
+				
+				for(int j=0; j<listaPosibles.length && !exit ;j++){
+					if(nombreAtaqueDeseado.equals(listaPosibles[j].getNombre())){
+						ataqueDeseado.copia(listaPosibles[j]);
+						
+						exit=true;
+					}
 				}
 			}
+		 		
 	 		
 	 		
 		}
@@ -323,23 +318,18 @@ public class Pokemon {
 		return listaAtaques[i];
 	}
 		
-		public Ataque[] getListaAtaquesPosibles(String nombre, Ataque[] ataquesUsados, Ataque[] listaTodosAtaques){
+		public Ataque[] getListaAtaquesPosibles(){
 			boolean exit=false;
 			Ataque[] listaAtaquesPosibles=new Ataque[1];
 			for(int i=0;i<listaAtaques.length;i++ ){
 //				este segundo for es para comparar cada pokemon que puede realizar cada uno de los ataques
-				for(int j=0;j<getAtaqueDeLaListaCompleta(i).getPokemonPuedeUsarlo().length && exit==false;j++ ){
-					if (nombre.equals(getAtaqueDeLaListaCompleta(i).getNombrePokemonValido(j))){
-						for(int k=0;k<ataquesUsados.length && exit==false;k++) {
-							if(!ataquesUsados[k].getNombre().equals(getAtaqueDeLaListaCompleta(i))) {
-								listaAtaquesPosibles=new Ataque[i];
-								listaAtaquesPosibles[listaAtaquesPosibles.length-1]=getAtaqueDeLaListaCompleta(i);
-								exit=true;
-							}
-							
-						}
-						
+				for(int j=0;j<listaAtaques[i].getPokemonPuedeUsarlo().length && exit==false;j++ ){
+					if (nombre.equals(listaAtaques[i].getNombrePokemonValido(j))){
+						listaAtaquesPosibles=new Ataque[listaAtaquesPosibles.length+1];
+						listaAtaquesPosibles[listaAtaquesPosibles.length-1].copia(listaAtaques[i]);;
+						exit=true;		
 					}
+						
 				}
 			}
 			return listaAtaquesPosibles; 

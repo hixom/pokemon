@@ -8,28 +8,21 @@ public class Ataque {
 	private String[] pokemonPuedeUsarlo;
 	private String[] efectosOtro;
 	public Scanner sc = new Scanner (System.in);
-
-	
-	private int vidaARestar;
-	private int variacion;
-	private float efectividad;
-	private int statAtaque;
-	private float stab;
 	private String AQuienAfecta;
 	
 	
 	
 	public Ataque() {
-		nombre="";
-		tipo=""; 
-		categoria="";
+		nombre="a";
+		tipo="a"; 
+		categoria="a";
 		potencia=0;
 		precision=0; 
 		pp=0;
 		pokemonPuedeUsarlo=new String[1];
 		efectosOtro=new String[1];
-		pokemonPuedeUsarlo[0]="";
-		efectosOtro[0]=efectosOtro[0];
+		pokemonPuedeUsarlo[0]="a";
+		efectosOtro[0]="a";
 			
 		
 	}

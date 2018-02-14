@@ -221,7 +221,7 @@ public static void listaAtaques(Ataque[] listaAtaques){
 		
 		if((Math.random()*(100)+1)<= ataque.getPrecision()){
 			if (!ataque.getCategoria().equals("otro")) {
-				daÃ±o(pokemonATQ, pokemonDEF, ataque);
+				daño(pokemonATQ, pokemonDEF, ataque);
 				if(pokemonDEF.getVida()>0){
 //					comprobamos si ademï¿½s tiene algï¿½n efecto secundario 
 					if(!ataque.getEfectosOtro().equals("nada") ){
@@ -249,7 +249,7 @@ public static void listaAtaques(Ataque[] listaAtaques){
 		ataque.pasarTurno();
 		return debilitado;
 	}
-	public static void daÃ±o(Pokemon pokemonATQ, Pokemon pokemonDEF, Ataque ataque ){
+	public static void daño(Pokemon pokemonATQ, Pokemon pokemonDEF, Ataque ataque ){
 		float stab;
 		int statAtaque;
 		int vidaARestar;
