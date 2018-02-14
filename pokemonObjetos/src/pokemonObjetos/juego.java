@@ -4,7 +4,7 @@ public class juego {
 
 	public static void main(String[] args) {
 		Scanner sc=new Scanner (System.in);
-		Ataque[] lista=new Ataque[13];
+		Ataque[] lista=new Ataque[14];
 		listaAtaques(lista);
 		
 		System.out.println("player1, vamos a proceder a elegir y crear tu pokemon");

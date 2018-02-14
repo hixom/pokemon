@@ -30,7 +30,8 @@ public class Ataque {
 		
 	}
 	public Ataque(String nombre,String tipo, String categoria, int potencia, int precision, int pp, String[] pokemonPuedeUsarlo, String[] efectosOtro,String AQuienAfecta){
-	
+		this.pokemonPuedeUsarlo=new String[pokemonPuedeUsarlo.length];
+		this.efectosOtro=new String[efectosOtro.length];
 		this.nombre=nombre;
 		this.tipo=tipo; 
 		this.categoria=categoria;
