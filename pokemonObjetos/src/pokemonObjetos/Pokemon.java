@@ -1,4 +1,5 @@
 package pokemonObjetos;
+import java.io.LineNumberInputStream;
 import java.util.Scanner;
 public class Pokemon {
 	private String nombre;
@@ -17,7 +18,7 @@ public class Pokemon {
 		setEstadisticas(nombre);
 		puntosDeEsfuerzo();
 		vida=vidaInicial;
-		if (!nombre.equals("blastoise")||!nombre.equals("charizard") || !nombre.equals("venusaur")) {
+		if (!nombre.equals("blastoise") && !nombre.equals("charizard") && !nombre.equals("venusaur")) {
 		String []listaPokemon=new String[1];
 		listaPokemon[0]="missigno";
 		String []efectosOtro=new String[2];
@@ -45,12 +46,12 @@ public class Pokemon {
 		do {
 			System.out.println("¿Quieres ponerle algún mote?(si|no)");
 			respuesta = sc.nextLine();
-		}while(!respuesta.equals("si")|| !respuesta.equals("no"));
+		}while(!respuesta.equals("si") && !respuesta.equals("no"));
 		if(respuesta.equals("si")) {
 			System.out.println("Ok, escríbelo entonces");
-			this.mote=sc.nextLine();
+			mote=sc.nextLine();
 		}else {
-			this.mote=this.nombre;
+			mote=nombre;
 		}
 		
 	
@@ -58,19 +59,30 @@ public class Pokemon {
 	public Ataque elegirAtaque() {
 		
 		int nAtaqueDeseado;
-		System.out.println("estos son los movimientos que has elegido");
+		System.out.println("estos son los movimientos que puedes hacer:");
 		for (int i=0;i<4;i++) {
-			System.out.println(this.movimientos[i].getNombre()+" (nª"+i+")");
+			System.out.println(movimientos[i].getNombre()+" (n�"+i+")");
 		}
 		do {
 		System.out.println("elige ahora cuál es el ataque que quieres (0,1,2,3)");
 		nAtaqueDeseado=sc.nextInt();
-		}while(nAtaqueDeseado<0 || nAtaqueDeseado>3);
+		if (movimientos[nAtaqueDeseado].getPp()>0) {
+			System.out.println("El ataque que has elegido no tiene pp's");
+		}
+		if (nAtaqueDeseado<0 || nAtaqueDeseado>3) {
+			System.out.println("no has elegido un n�mero comprendido entre el 3 o el 0, has elegido el "+ nAtaqueDeseado);
+		}
+		}while((nAtaqueDeseado<0 || nAtaqueDeseado>3) && movimientos[nAtaqueDeseado].getPp()>0);
 		
-		return this.movimientos[nAtaqueDeseado];
+		return movimientos[nAtaqueDeseado];
 	}
 	
-	
+	public void showMovimientos(){
+		for (int i = 0; i < movimientos.length; i++) {
+			System.out.println(movimientos[i].getNombre()+ "pp:"+movimientos[i].getPp());
+		}
+		
+	}
 	public Ataque[] getMovimientos() {
 		return movimientos;
 	}
@@ -83,7 +95,8 @@ public class Pokemon {
 
 	public void setEstadisticas(String nombre){
 		switch (nombre){
-		 case "Missigno":
+		 case "missigno":
+			 tipo=new String[1];
 			tipo[0]="Error Supremo";
 			vidaInicial=1234;
 			ataque=1234; 
@@ -92,7 +105,8 @@ public class Pokemon {
 			defensaESP=1234; 
 			velocidad=1234;
 			break;
-		 case "Blastoise":
+		 case "blastoise":
+			tipo=new String[1];
 			tipo[0]="agua"; 
 			vidaInicial=299;
 			ataque=181;
@@ -101,7 +115,8 @@ public class Pokemon {
 			defensaESP=246; 
 			velocidad=192;
 			break;
-		 case "Charizard":
+		 case "charizard":
+			tipo=new String[2];
 			tipo[0]="fuego";
 			tipo[1]="volador";
 			vidaInicial=297;
@@ -110,7 +125,8 @@ public class Pokemon {
 			ataqueESP=254;
 			defensaESP=206; 
 			velocidad=259;
-		 case "Venusaur":
+		 case "venusaur":
+			 tipo=new String[1];
 				tipo[0]="planta";
 				vidaInicial=301;
 				ataque=180;
@@ -149,9 +165,10 @@ public class Pokemon {
 	}
 	public void setMovimientos(String nombre){
 		System.out.println("Vamos a proceder a elegir los cuatro ataques");
+
 		for (int i=0;i<4;i++) {
-			this.movimientos[i]=new Ataque();
-			this.movimientos[i].elegirAtaque(nombre, this.movimientos, i);
+			movimientos[i]=new Ataque();
+			movimientos[i].elegirAtaque(nombre, movimientos, i);
 		}
 	
 
@@ -164,7 +181,7 @@ public class Pokemon {
 			Scanner sc = new Scanner (System.in);
 			System.out.println("¿En qué dos apartados quieres que se especialice el pokémon (vida, ataque, defensa, ataqueESP, defensaESP o velocidad)?");
 			do{
-				System.out.println("Elige el primero (recuerda que tiene que ser uno de los siguientes: vidaInicial, ataque, defensa, ataqueESP, defensaESP o velocidad)");
+				System.out.println("Elige el primero (recuerda que tiene que ser uno de los siguientes: vida, ataque, defensa, ataqueESP, defensaESP o velocidad)");
 				respuesta[0]=sc.nextLine();
 			}while(!respuesta[0].equals("vida") && !respuesta[0].equals("ataque") && !respuesta[0].equals("defensa") && !respuesta[0].equals("ataqueESP") && !respuesta[0].equals("defensaESP") && !respuesta[0].equals("velocidad"));
 			

@@ -4,12 +4,108 @@ public class juego {
 
 	public static void main(String[] args) {
 		Scanner sc=new Scanner (System.in);
+		Ataque[] lista=new Ataque[13];
+		listaAtaques(lista);
 		
 		System.out.println("player1, vamos a proceder a elegir y crear tu pokemon");
 		Pokemon pokemonPlayer1=new Pokemon();
 		System.out.println("player2, vamos a proceder a elegir y crear tu pokemon");
 		Pokemon pokemonPlayer2=new Pokemon();
 		
+	}
+public static void listaAtaques(Ataque[] listaAtaques){
+		String[] pokemonPuedeUsarlo;
+		String[] efectosOtro;
+		pokemonPuedeUsarlo=new String[1];
+		pokemonPuedeUsarlo[0]="charizard";
+		efectosOtro=new String[1];
+		efectosOtro[0]="quemar";
+		listaAtaques[0]=new Ataque("lanzallamas", "fuego", 		"especial", 		90, 		 100, 			10, 	 pokemonPuedeUsarlo, efectosOtro, "defensor"  );
+		
+		pokemonPuedeUsarlo=new String[3];
+		pokemonPuedeUsarlo[0]="charizard";
+		pokemonPuedeUsarlo[1]="venusaur";
+		pokemonPuedeUsarlo[2]="blastoise";
+		efectosOtro[0]="nada";
+		listaAtaques[2]=new Ataque("terremoto", "tierra", 		"fisico", 		100, 		 100, 			10, 	 pokemonPuedeUsarlo, efectosOtro , "nadie" );
+		
+		pokemonPuedeUsarlo=new String[1];
+		pokemonPuedeUsarlo[0]="blastoise";
+		efectosOtro[0]="quemar";
+		listaAtaques[1]= new Ataque("escaldar", "agua", 		"especial", 		80, 		 100, 			15, 	 pokemonPuedeUsarlo, efectosOtro , "defensor" );
+		
+		pokemonPuedeUsarlo=new String[1];
+		pokemonPuedeUsarlo[0]="charizard";
+		efectosOtro=new String[2];
+		efectosOtro[0]="ataque";
+		efectosOtro[1]="velocidad";
+		listaAtaques[3]=new Ataque("danza dragon", "dragon", 		"otro", 		0, 		 100, 			15, 	 pokemonPuedeUsarlo, efectosOtro , "atacante" );
+		
+		pokemonPuedeUsarlo=new String[2];
+		pokemonPuedeUsarlo[0]="venusaur";
+		pokemonPuedeUsarlo[1]="blastoise";
+		efectosOtro=new String[1];
+		efectosOtro[0]="curar";
+		listaAtaques[4]= new Ataque("recuperacion", "normal", 		"otro", 		0, 		 100, 			10, 	 pokemonPuedeUsarlo, efectosOtro , "atacante" );
+		
+		pokemonPuedeUsarlo=new String[3];
+		pokemonPuedeUsarlo[0]="charizard";
+		pokemonPuedeUsarlo[1]="venusaur";
+		pokemonPuedeUsarlo[2]="blastoise";
+		efectosOtro[0]="proteger";
+		listaAtaques[5]= new Ataque("proteccion", "normal", 		"otro", 		0, 		 100, 			20, 	 pokemonPuedeUsarlo, efectosOtro , "atacante" );
+		
+		pokemonPuedeUsarlo=new String[2];
+		pokemonPuedeUsarlo[0]="venusaur";
+		pokemonPuedeUsarlo[1]="charizard";
+		efectosOtro=new String[2];
+		efectosOtro[0]="ataque";
+		efectosOtro[1]="ataque";
+		listaAtaques[6]= new Ataque("danza espada", "normal", 		"otro", 		0, 		 100, 			10, 	 pokemonPuedeUsarlo, efectosOtro, "atacante"  );
+		
+		pokemonPuedeUsarlo=new String[3];
+		pokemonPuedeUsarlo[0]="charizard";
+		pokemonPuedeUsarlo[1]="venusaur";
+		pokemonPuedeUsarlo[2]="blastoise";
+		efectosOtro=new String[1];
+		efectosOtro[0]="intoxicar";
+		listaAtaques[7]= new Ataque("toxico", "veneno", 		"otro", 		0, 		 100, 			20, 	 pokemonPuedeUsarlo, efectosOtro , "defensor" );
+		
+		pokemonPuedeUsarlo=new String[1];
+		pokemonPuedeUsarlo[0]="blastoise";
+		efectosOtro[0]="congelar";
+		listaAtaques[8]= new Ataque("ventisca", "hielo", 		"especial", 		110, 		 70, 			5, 	 pokemonPuedeUsarlo, efectosOtro , "defensor" );
+		
+		pokemonPuedeUsarlo=new String[1];
+		pokemonPuedeUsarlo[0]="blastoise";
+		efectosOtro[0]="nada";
+		listaAtaques[9]= new Ataque("hidrobomba", "agua", 		"especial", 		110, 		 80, 			5, 	 pokemonPuedeUsarlo, efectosOtro, "nadie"  );
+		
+		pokemonPuedeUsarlo=new String[1];
+		pokemonPuedeUsarlo[0]="blastoise";
+		efectosOtro=new String[2];
+		efectosOtro[0]="defensa";
+		efectosOtro[1]="defensa";
+		listaAtaques[10]= new Ataque("defensa ferrea", "acero", 		"otro", 		0, 		 100, 			15, 	 pokemonPuedeUsarlo, efectosOtro , "atacante" );
+		
+		pokemonPuedeUsarlo=new String[1];
+		pokemonPuedeUsarlo[0]="blastoise";
+		efectosOtro=new String[1];
+		efectosOtro[0]="nada";
+		listaAtaques[11]= new Ataque("fisura", "tierra", 		"fisica", 		999999999, 		 30, 			5, 	 pokemonPuedeUsarlo, efectosOtro , "nadie" );
+		
+		pokemonPuedeUsarlo=new String[1];
+		pokemonPuedeUsarlo[0]="venusaur";
+		efectosOtro[0]="nada";
+		listaAtaques[12]= new Ataque("bomba germen", "planta", 		"fisico", 		80, 		 100, 			15, 	 pokemonPuedeUsarlo, efectosOtro, "nadie"  );
+		
+		pokemonPuedeUsarlo=new String[1];
+		pokemonPuedeUsarlo[0]="venusaur";
+		efectosOtro[0]="nada";
+		listaAtaques[13]= new Ataque("poder oculto", "roca", 		"especial", 		60, 		 100, 			20, 	 pokemonPuedeUsarlo, efectosOtro, "nadie"  );
+		
+		
+	
 	}
 	public static void partida(Pokemon pokemonPlayer1, Pokemon pokemonPlayer2 ) {
 		boolean pkmnDebilitado=false;
@@ -39,12 +135,12 @@ public class juego {
 				atacaSegundo=pokemonPlayer1;
 			}
 			
-			System.out.println(playerVeloz+" elige el movimiento que quieres hacer");
+			System.out.println(playerVeloz+" vamos contigo");
 			ataqueDeseadoP1=atacaPrimero.elegirAtaque();
-			System.out.println(playerLento+" elige el movimiento que quieres hacer");
+			System.out.println(playerLento+" vamos contigo");
 			ataqueDeseadoP2=atacaSegundo.elegirAtaque();
 			
-			System.out.println(atacaPrimero.getMote()+" usÃ³ " +ataqueDeseadoP1);
+			
 			seCuraONO(atacaPrimero, turnosDormCongP1);
 			if (atacaPrimero.getEstado().equals("congelado") || atacaPrimero.getEstado().equals("dormido") ) {
 				pkmnDebilitado=atacar(atacaPrimero, atacaSegundo,ataqueDeseadoP1,pkmnDebilitado );
@@ -86,12 +182,6 @@ public class juego {
 		} 
 		return turnos;
 	}
-	public static boolean atacaONO(Pokemon pokemon, int turnos) {
-		boolean respuesta=false;
-		
-		
-		return respuesta;
-	}
 	public static boolean restarVidaSegunEstadoAlterado(Pokemon pokemon, boolean debilitado){
 		if (pokemon.getEstado().equals("quemado") || pokemon.getEstado().equals("envenenado")) {
 			pokemon.setVida((int)(pokemon.getVidaInicial()*0.16));
@@ -126,10 +216,12 @@ public class juego {
 		
 	}
 	public static boolean atacar(Pokemon pokemonATQ, Pokemon pokemonDEF, Ataque ataque, boolean debilitado) {
+		System.out.println(pokemonATQ.getMote()+" usó "+ ataque.getNombre());
 //		si la precision es de 80, por ejemplo, y el random da un numero superior a este no ataca
+		
 		if((Math.random()*(100)+1)<= ataque.getPrecision()){
 			if (!ataque.getCategoria().equals("otro")) {
-				daÃ±o(pokemonATQ, pokemonDEF, ataque);
+				daño(pokemonATQ, pokemonDEF, ataque);
 				if(pokemonDEF.getVida()>0){
 //					comprobamos si ademï¿½s tiene algï¿½n efecto secundario 
 					if(!ataque.getEfectosOtro().equals("nada") ){
@@ -154,9 +246,10 @@ public class juego {
 		}else{
 			System.out.println("El ataque ha fallado.");
 		}
+		ataque.pasarTurno();
 		return debilitado;
 	}
-	public static void daÃ±o(Pokemon pokemonATQ, Pokemon pokemonDEF, Ataque ataque ){
+	public static void daño(Pokemon pokemonATQ, Pokemon pokemonDEF, Ataque ataque ){
 		float stab;
 		int statAtaque;
 		int vidaARestar;
