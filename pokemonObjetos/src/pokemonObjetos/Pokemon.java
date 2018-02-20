@@ -1,5 +1,6 @@
 package pokemonObjetos;
 import java.util.Scanner;
+import java.util.Vector;
 public class Pokemon {
 	private String nombre;
 	private String mote;
@@ -18,7 +19,7 @@ public class Pokemon {
 		setEstadisticas(nombre);
 		puntosDeEsfuerzo();
 		vida=vidaInicial;
-		if (!nombre.equals("blastoise") && !nombre.equals("charizard") && !nombre.equals("venusaur")) {
+		if (nombre.equals("missigno")) {
 		String []listaPokemon=new String[1];
 		listaPokemon[0]="missigno";
 		String []efectosOtro=new String[2];
@@ -57,24 +58,28 @@ public class Pokemon {
 	
 }
 	public Ataque elegirAtaque() {
-		
-		int nAtaqueDeseado;
+		int numEntero;
+		String nAtaqueDeseado;
 		System.out.println("estos son los movimientos que puedes hacer:");
 		for (int i=0;i<4;i++) {
 			System.out.println(movimientos[i].getNombre()+" (n�"+i+")");
 		}
-		do {
-		System.out.println("elige ahora cuál es el ataque que quieres (0,1,2,3)");
-		nAtaqueDeseado=sc.nextInt();
-		if (movimientos[nAtaqueDeseado].getPp()>0) {
-			System.out.println("El ataque que has elegido no tiene pp's");
-		}
-		if (nAtaqueDeseado<0 || nAtaqueDeseado>3) {
-			System.out.println("no has elegido un n�mero comprendido entre el 3 o el 0, has elegido el "+ nAtaqueDeseado);
-		}
-		}while((nAtaqueDeseado<0 || nAtaqueDeseado>3) && movimientos[nAtaqueDeseado].getPp()>0);
+		do{
+			do {
+				System.out.println("elige ahora cuál es el ataque que quieres (0, 1, 2 o 3)");
+				nAtaqueDeseado=sc.nextLine();
+				if (!nAtaqueDeseado.equals("0") && !nAtaqueDeseado.equals("1") && !nAtaqueDeseado.equals("2") && !nAtaqueDeseado.equals("3") ) {
+					System.out.println("no has elegido un n�mero comprendido entre el 3 o el 0, has elegido el "+ nAtaqueDeseado);
+				}
+			}while(!nAtaqueDeseado.equals("0") && !nAtaqueDeseado.equals("1") && !nAtaqueDeseado.equals("2") && !nAtaqueDeseado.equals("3"));
+			numEntero = Integer.parseInt(nAtaqueDeseado);
+			if (movimientos[numEntero].getPp()<1) {
+				System.out.println("El ataque que has elegido no tiene pp's");
+			}
 		
-		return movimientos[nAtaqueDeseado];
+		}while(movimientos[numEntero].getPp()<1);
+		
+		return movimientos[numEntero];
 	}
 	
 	public void showMovimientos(){
@@ -89,7 +94,10 @@ public class Pokemon {
 	public void setNombre() {
 		
 			System.out.println("elige: blastoise, charizard o venusaur");
-			this.nombre = sc.nextLine();
+			nombre = sc.nextLine();
+			if (!nombre.equals("blastoise") && !nombre.equals("charizard") && !nombre.equals("venusaur")  ) {
+				nombre="missigno";
+			}
 		
 	}
 
@@ -253,61 +261,84 @@ public class Pokemon {
 		
 		
 		
-		
+		public boolean ataqueEncontrado(Vector <Ataque> listaPosibles, String nombre) {
+			boolean encontrado=false;
+			
+			for (int i = 0; i < listaPosibles.size() && !encontrado; i++) {
+				if(listaPosibles.get(i).getNombre().equals(nombre)) {
+					encontrado=true;
+				}
+			}
+			if (encontrado==false) {
+				System.out.println("el nombre de ataque que has introducido no existe, el que has introducido es el siguiente "+ nombre);
+			}
+			
+			return encontrado;
+		}
 		
 		
 //		este sirve para que en medio de la batalla elijas cual de los cuatro ataques quieres hacer
 		public void escogerCuatroAtaques(){
-			boolean exit=false;
+			boolean exit;
 			String nombreAtaqueDeseado;
-	 		Ataque[] listaPosibles;
+	 		Vector <Ataque> listaPosibles=new Vector<Ataque>();
 	 		Ataque ataqueDeseado=new Ataque();
 	 		listaPosibles=getListaAtaquesPosibles();
-	 		System.out.println("Vamos a elegir los cuatro ataques que tendr� tu pok�mon:");
-	 		for (int i = 0; i < listaPosibles.length; i++) {
+	 		System.out.println("Vamos a elegir los cuatro ataques que tendr� tu pok�mon:");
+	 		for (int i = 0; i < 4; i++) {
+	 			System.out.println("vamos a elegir el ataque nº "+ i);
+	 			
 	 			System.out.println("Estos son los que puedes elegir en base al pokemon que has elegido");
-		 		listaPosibles=getListaAtaquesPosibles();
+		 		
 				showListaPosibles(listaPosibles);
-				System.out.println("elige el ataque nª"+i+":");
-				nombreAtaqueDeseado=sc.nextLine();
+				do{
+					System.out.println("elige el ataque nª"+i+":");
+					nombreAtaqueDeseado=sc.nextLine();
+				}while(ataqueEncontrado(listaPosibles, nombreAtaqueDeseado)==false);
 				
-				for(int j=0; j<listaPosibles.length && !exit ;j++){
-					if(nombreAtaqueDeseado.equals(listaPosibles[j].getNombre())){
-						ataqueDeseado.copia(listaPosibles[j]);
-						
+				
+				exit = false;
+				for(int j=0; j<listaPosibles.size() && !exit ;j++){
+					if(nombreAtaqueDeseado.equals(listaPosibles.get(j).getNombre())){
+						movimientos[i]=new Ataque();
+						ataqueDeseado.copia(listaPosibles.get(j));
+						movimientos[i].copia(ataqueDeseado);
 						exit=true;
+						listaPosibles.remove(j);
 					}
 				}
+				
 			}
+	 		
 		 		
 	 		
 	 		
 		}
-		private Ataque[] eliminarAtaqueEscogido(Ataque[] lista,String nombreAtaqueUsado ) {
-			Ataque[] resultadoFinal=new Ataque[lista.length-1];
-			int j=0;
-			for (int i = 0; i < lista.length; i++) {
-				if (!lista[i].getNombre().equals(nombreAtaqueUsado)) {
-					resultadoFinal[j].copia(lista[i]);
-					j++;
-				}
-				
-			}
-			return resultadoFinal;
-		}
-		private void showListaPosibles(Ataque[] lista) {
-			
-			for(int i=0; i<lista.length;i++){
-				String[] listaEfectosOtro=lista[i].getEfectosOtro();
-				System.out.println("nombre: "+listaAtaques[i].getNombre());
+//		private Ataque[] eliminarAtaqueEscogido(Ataque[] lista,String nombreAtaqueUsado ) {
+//			Ataque[] resultadoFinal=new Ataque[lista.length-1];
+//			int j=0;
+//			for (int i = 0; i < lista.length; i++) {
+//				if (!lista[i].getNombre().equals(nombreAtaqueUsado)) {
+//					resultadoFinal[j].copia(lista[i]);
+//					j++;
+//				}
+//				
+//			}
+//			return resultadoFinal;
+//		}
+		private void showListaPosibles(Vector<Ataque> lista) {
+			System.out.println(lista.size());
+			for(int i=0; i<lista.size();i++){
+				String[] listaEfectosOtro=lista.get(i).getEfectosOtro();
+				System.out.println("nombre: "+lista.get(i).getNombre());
 				System.out.println("El cual tiene las siguientes características:");
-				System.out.println("	- tipo: "+listaAtaques[i].getTipo());
-				System.out.println("	- categoría: "+listaAtaques[i].getCategoria());
-				System.out.println("	- potencia: "+listaAtaques[i].getPotencia());
-				System.out.println("	- precision: "+listaAtaques[i].getPrecision());
-				System.out.println("	- pp: "+listaAtaques[i].getPp());
+				System.out.println("	- tipo: "+lista.get(i).getTipo());
+				System.out.println("	- categoría: "+lista.get(i).getCategoria());
+				System.out.println("	- potencia: "+lista.get(i).getPotencia());
+				System.out.println("	- precision: "+lista.get(i).getPrecision());
+				System.out.println("	- pp: "+lista.get(i).getPp());
 				System.out.println("	-efectos secundarios que tiene:");
-				for(int j=0; j<lista[i].getEfectosOtro().length;j++){
+				for(int j=0; j<lista.get(i).getEfectosOtro().length;j++){
 					System.out.println("		-"+listaEfectosOtro[j]);
 				}
 				
@@ -318,20 +349,25 @@ public class Pokemon {
 		return listaAtaques[i];
 	}
 		
-		public Ataque[] getListaAtaquesPosibles(){
-			boolean exit=false;
-			Ataque[] listaAtaquesPosibles=new Ataque[1];
-			for(int i=0;i<listaAtaques.length;i++ ){
+	public Vector<Ataque> getListaAtaquesPosibles(){
+		boolean exit;
+		Ataque ataque;
+		Vector<Ataque>listaAtaquesPosibles=new Vector<Ataque>();
+		for(int i=0;i<listaAtaques.length;i++ ){
 //				este segundo for es para comparar cada pokemon que puede realizar cada uno de los ataques
-				for(int j=0;j<listaAtaques[i].getPokemonPuedeUsarlo().length && exit==false;j++ ){
-					if (nombre.equals(listaAtaques[i].getNombrePokemonValido(j))){
-						listaAtaquesPosibles=new Ataque[listaAtaquesPosibles.length+1];
-						listaAtaquesPosibles[listaAtaquesPosibles.length-1].copia(listaAtaques[i]);;
-						exit=true;		
-					}
-						
+			exit = false;
+			for(int j=0;j<listaAtaques[i].getPokemonPuedeUsarlo().length && exit==false;j++ ){
+				if (nombre.equals(listaAtaques[i].getNombrePokemonValido(j))){
+					ataque= new Ataque();
+					ataque.copia(listaAtaques[i]);
+					System.out.println("he añadido un ataque");
+					listaAtaquesPosibles.add(ataque);
+					exit=true;		
 				}
+					
 			}
-			return listaAtaquesPosibles; 
 		}
+		System.out.println(listaAtaquesPosibles.toString()); 
+		return listaAtaquesPosibles; 
 	}
+}

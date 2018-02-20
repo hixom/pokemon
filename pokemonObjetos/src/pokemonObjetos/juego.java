@@ -11,6 +11,7 @@ public class juego {
 		Pokemon pokemonPlayer1=new Pokemon(lista);
 		System.out.println("player2, vamos a proceder a elegir y crear tu pokemon");
 		Pokemon pokemonPlayer2=new Pokemon(lista);
+		partida(pokemonPlayer1, pokemonPlayer2);
 		
 	}
 public static void listaAtaques(Ataque[] listaAtaques){
@@ -109,9 +110,11 @@ public static void listaAtaques(Ataque[] listaAtaques){
 	}
 	public static void partida(Pokemon pokemonPlayer1, Pokemon pokemonPlayer2 ) {
 		boolean pkmnDebilitado=false;
-		int masRapido;
+		boolean p1masRapido;
 		int turnosDormCongP1=1;
 		int turnosDormCongP2=1;
+		String nombrePokemonDebilitado;
+		String playerGanador;
 		Pokemon atacaPrimero;
 		Pokemon atacaSegundo;
 		String playerVeloz;
@@ -121,8 +124,8 @@ public static void listaAtaques(Ataque[] listaAtaques){
 		
 		do {
 			
-			masRapido=masRapido(pokemonPlayer1, pokemonPlayer2);
-			if(masRapido==1) {
+			p1masRapido=masRapido(pokemonPlayer1, pokemonPlayer2);
+			if(p1masRapido==true) {
 				playerVeloz="player 1";
 				playerLento="player 2";
 				atacaPrimero=pokemonPlayer1;
@@ -142,23 +145,27 @@ public static void listaAtaques(Ataque[] listaAtaques){
 			
 			
 			seCuraONO(atacaPrimero, turnosDormCongP1);
-			if (atacaPrimero.getEstado().equals("congelado") || atacaPrimero.getEstado().equals("dormido") ) {
+			if (!atacaPrimero.getEstado().equals("congelado") || !atacaPrimero.getEstado().equals("dormido") ) {
 				pkmnDebilitado=atacar(atacaPrimero, atacaSegundo,ataqueDeseadoP1,pkmnDebilitado );
 				imprimirVida(atacaSegundo);
 			}
 			
 			if(atacaSegundo.getVida()>0) {
 				seCuraONO(atacaSegundo, turnosDormCongP2);
-				if (atacaSegundo.getEstado().equals("congelado") || atacaSegundo.getEstado().equals("dormido") ) {
+				if (!atacaSegundo.getEstado().equals("congelado") || !atacaSegundo.getEstado().equals("dormido") ) {
 					pkmnDebilitado=atacar(atacaSegundo, atacaPrimero ,ataqueDeseadoP2,pkmnDebilitado );
 					imprimirVida(atacaPrimero);	
 				}
 			}
 				
-				
+			if(atacaPrimero.getVida()>0) {
+				pkmnDebilitado=restarVidaSegunEstadoAlterado(atacaPrimero,pkmnDebilitado);
+				pkmnDebilitado=restarVidaSegunEstadoAlterado(atacaSegundo,pkmnDebilitado);
+			}
+			if (pkmnDebilitado==true) {
+				System.out.println("");
+			}
 			
-			pkmnDebilitado=restarVidaSegunEstadoAlterado(atacaPrimero,pkmnDebilitado);
-			pkmnDebilitado=restarVidaSegunEstadoAlterado(atacaSegundo,pkmnDebilitado);
 		}while (pkmnDebilitado==false);
 	}
 	public static int seCuraONO(Pokemon pokemon, int turnos) {
@@ -207,11 +214,11 @@ public static void listaAtaques(Ataque[] listaAtaques){
 		System.out.println("/: "+pokemon.getVidaInicial()+"ps");
 	}
 
-	public static int masRapido(Pokemon pokemonPlayer1, Pokemon pokemonPlayer2 ) {
+	public static boolean masRapido(Pokemon pokemonPlayer1, Pokemon pokemonPlayer2 ) {
 			if (pokemonPlayer1.getVelocidad()>pokemonPlayer2.getVelocidad()) {
-				return 1;
+				return true;
 			}else {
-				return 2;
+				return false;
 			}
 		
 	}
@@ -221,7 +228,7 @@ public static void listaAtaques(Ataque[] listaAtaques){
 		
 		if((Math.random()*(100)+1)<= ataque.getPrecision()){
 			if (!ataque.getCategoria().equals("otro")) {
-				daño(pokemonATQ, pokemonDEF, ataque);
+				daÃ±o(pokemonATQ, pokemonDEF, ataque);
 				if(pokemonDEF.getVida()>0){
 //					comprobamos si ademï¿½s tiene algï¿½n efecto secundario 
 					if(!ataque.getEfectosOtro().equals("nada") ){
@@ -249,7 +256,7 @@ public static void listaAtaques(Ataque[] listaAtaques){
 		ataque.pasarTurno();
 		return debilitado;
 	}
-	public static void daño(Pokemon pokemonATQ, Pokemon pokemonDEF, Ataque ataque ){
+	public static void daÃ±o(Pokemon pokemonATQ, Pokemon pokemonDEF, Ataque ataque ){
 		float stab;
 		int statAtaque;
 		int vidaARestar;
