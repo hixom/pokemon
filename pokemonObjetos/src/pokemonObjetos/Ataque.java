@@ -1,4 +1,4 @@
-ackage pokemonObjetos;
+package pokemonObjetos;
 import java.util.Scanner;
 public class Ataque {
 	private String nombre;
