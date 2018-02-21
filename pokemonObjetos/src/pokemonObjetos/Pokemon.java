@@ -6,20 +6,17 @@ public class Pokemon {
 	private String mote;
 	private String[] tipo;
 	private int vida, ataque, ataqueESP, defensa, defensaESP, velocidad, vidaInicial;
-	private Ataque[] movimientos= new Ataque[4];
+	private Ataque[] movimientos;
 	private String estado;
 	private Ataque[] listaAtaques;
 	Scanner sc=new Scanner(System.in);
 	
-	
-	public Pokemon(Ataque[] listaTodosAtaques){
-		setNombre();
-		setMote();
+	public Pokemon() {
+		nombre="missigno";
+		mote=nombre;
 		estado="normal";
-		setEstadisticas(nombre);
-		puntosDeEsfuerzo();
+		setEstadisticas("missigno");
 		vida=vidaInicial;
-		if (nombre.equals("missigno")) {
 		String []listaPokemon=new String[1];
 		listaPokemon[0]="missigno";
 		String []efectosOtro=new String[2];
@@ -35,10 +32,17 @@ public class Pokemon {
 		efectosOtro[1]="ataqueESP";
 		efectosOtro[2]="curar";
 		movimientos[3]= new Ataque("nirvana","Error Supremo", "otro",0 , 100, 50,listaPokemon,efectosOtro, "defensor");
-		}else {
+	}
+	public void leerDatos (Ataque[] listaTodosAtaques){
+		setNombre();
+		setMote();
+		vida=vidaInicial;
+		if (!nombre.equals("missigno")) {
+			setEstadisticas(nombre);
 			listaAtaques=listaTodosAtaques;
 			escogerCuatroAtaques();
 		}
+		puntosDeEsfuerzo();
 	
 	}
 	public void setMote() {
@@ -282,7 +286,6 @@ public class Pokemon {
 			boolean exit;
 			String nombreAtaqueDeseado;
 	 		Vector <Ataque> listaPosibles=new Vector<Ataque>();
-	 		Ataque ataqueDeseado=new Ataque();
 	 		listaPosibles=getListaAtaquesPosibles();
 	 		System.out.println("Vamos a elegir los cuatro ataques que tendr� tu pok�mon:");
 	 		for (int i = 0; i < 4; i++) {
@@ -300,9 +303,9 @@ public class Pokemon {
 				exit = false;
 				for(int j=0; j<listaPosibles.size() && !exit ;j++){
 					if(nombreAtaqueDeseado.equals(listaPosibles.get(j).getNombre())){
-						movimientos[i]=new Ataque();
-						ataqueDeseado.copia(listaPosibles.get(j));
-						movimientos[i].copia(ataqueDeseado);
+						movimientos[i]=new Ataque(listaPosibles.get(j));
+//						ataqueDeseado.copia(listaPosibles.get(j));
+//						movimientos[i].copia(ataqueDeseado);
 						exit=true;
 						listaPosibles.remove(j);
 					}
@@ -327,7 +330,6 @@ public class Pokemon {
 //			return resultadoFinal;
 //		}
 		private void showListaPosibles(Vector<Ataque> lista) {
-			System.out.println(lista.size());
 			for(int i=0; i<lista.size();i++){
 				String[] listaEfectosOtro=lista.get(i).getEfectosOtro();
 				System.out.println("nombre: "+lista.get(i).getNombre());
@@ -358,9 +360,8 @@ public class Pokemon {
 			exit = false;
 			for(int j=0;j<listaAtaques[i].getPokemonPuedeUsarlo().length && exit==false;j++ ){
 				if (nombre.equals(listaAtaques[i].getNombrePokemonValido(j))){
-					ataque= new Ataque();
-					ataque.copia(listaAtaques[i]);
-					System.out.println("he añadido un ataque");
+					ataque= new Ataque(listaAtaques[i]);
+//					ataque.copia(listaAtaques[i]);
 					listaAtaquesPosibles.add(ataque);
 					exit=true;		
 				}
